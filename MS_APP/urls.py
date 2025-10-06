@@ -4,6 +4,8 @@ from django.urls import path
 urlpatterns = [
     path('', views.SequencerView, name='sequencer'),
     path('sequences/', views.SequencesListView, name='sequences'),
-    path('profile/', views.ProfileView, name='profile'),
+    path('profile/<int:id>/', views.ProfileView, name='profile'),
     path('login/', views.LoginView, name='login'),
+    path('register/', views.LoginView, name='register'),
+    path('sequence/<int:id>/', views.SequencerView, name='sequencer_with_id'),
 ]
