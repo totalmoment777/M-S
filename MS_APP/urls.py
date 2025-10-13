@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/', views.LoginView, name='login'),
     path('register/', views.LoginView, name='register'),
     path('sequence/<int:id>/', views.SequencerView, name='sequencer_with_id'),
+    path('pagination/', views.PaginationView, name='pagination'),
 ]

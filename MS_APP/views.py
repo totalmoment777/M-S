@@ -1,9 +1,11 @@
 from django.shortcuts import render
-
+from django.http import HttpResponse
+from .models import Track, Comment
+from django.core.paginator import Paginator
 # Create your views here.
 def SequencerView(request):
     if request.method == 'GET':
-        return render(request, 'index.html')
+        return render(request, 'base/index.html')
     if request.method == 'POST':
         pass
 def SequencesListView(request):
@@ -13,7 +15,11 @@ def SequencesListView(request):
         pass
 def ProfileView(request, id):
     if request.method == 'GET':
-        return render(request, 'profile.html', {'id': id})
+        track_list = Track.objects.filter(author = request.user).order_by('-created_at')
+        paginator = Paginator(track_list, 10)  
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        return render(request, 'profile.html', {'id': id, 'page_obj': page_obj})
     if request.method == 'POST':
         pass
 def LoginView(request):
@@ -31,3 +37,13 @@ def SequencerWithIDView(request, id):
         return render(request, 'info.html', {'id': id})
     if request.method == 'POST':
         pass    
+
+def PaginationView(request):
+    if request.method == 'GET':
+        track_list = Track.objects.all().order_by('-created_at')
+        paginator = Paginator(track_list, 3)  # Show 10 tracks per page
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        return render(request, 'sequences.html', {'page_obj': page_obj})
+    if request.method == 'POST':
+        pass

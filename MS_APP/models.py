@@ -18,8 +18,9 @@ class Track(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     dere_st = models.IntegerField(choices=STATUS_CHOICES, default=1)
     privaty_ch = models.IntegerField(choices=PRIVATE_CHOICES, default=2)
-    likes = models.IntengerField(default=0)
+    likes = models.IntegerField(default=0)
     cho_ones = models.ManyToManyField(User, related_name='featured_tracks', blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Comment(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
